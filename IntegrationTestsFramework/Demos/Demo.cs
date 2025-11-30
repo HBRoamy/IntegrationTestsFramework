@@ -6,7 +6,7 @@ using System.Net.Http.Json;
 
 namespace IntegrationTestsFramework.Demos;
 
-public class Demo : IntegrationTestBase, IAsyncLifetime
+public class Demo : IntegrationTestBase
 {
     private readonly PlaceholderEntity _entityWithUserId;
     private readonly PlaceholderEntity _entityWithoutUserId;
@@ -17,14 +17,9 @@ public class Demo : IntegrationTestBase, IAsyncLifetime
         _entityWithoutUserId = new PlaceholderEntity(uuid: Guid.NewGuid(), userId: null);
     }
 
-    public Task InitializeAsync()
+    public override Task InitializeAsync()
     {
         return SeedTestDbSetAsync(_entityWithUserId, _entityWithoutUserId);
-    }
-
-    public Task DisposeAsync()
-    {
-        return Task.CompletedTask;
     }
 
     [Theory]

@@ -7,7 +7,7 @@ using Moq;
 
 namespace IntegrationTestsFramework.Framework;
 
-public class IntegrationTestBase : IDisposable
+public class IntegrationTestBase : IDisposable, IAsyncLifetime
 {
     protected readonly HttpClient TestClient;
     protected readonly Mock<PlaceholderIAmazonDynamoDB> DynamoDBTestClient;
@@ -35,6 +35,16 @@ public class IntegrationTestBase : IDisposable
             });
 
         TestClient = Factory.CreateClient();
+    }
+
+    public virtual Task InitializeAsync()
+    {
+        return Task.CompletedTask;
+    }
+
+    public virtual Task DisposeAsync()
+    {
+        return Task.CompletedTask;
     }
 
     /// <summary>
